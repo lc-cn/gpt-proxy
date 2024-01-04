@@ -7,7 +7,7 @@ const dotenv=require('dotenv')
 dotenv.config()
 const { completions, chatCompletions } =require('./routes.js');
 process.on("uncaughtException", function (err) {
-    if (DEBUG) console.error(`Caught exception: ${err}`);
+    console.error(`Caught exception: ${err}`);
 });
 
 const router = new Router();
