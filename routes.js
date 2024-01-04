@@ -5,14 +5,6 @@ import { DEBUG } from "./config.js";
 async function completions(req, res) {
     let orgId = generateId();
     const authorization=req.headers?.authorization||req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
-    if (!req.body.prompt) {
-        res.set("Content-Type", "application/json");
-        return res.status(400).send({
-            status: false,
-            error: "No prompt provided"
-        });
-    }
-
     if (req.body.stream) {
         try {
             const response = await axios.post(

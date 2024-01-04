@@ -18,12 +18,12 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 
 // Register routes
-app.all("/", async function (req, res) {
+app.get("/", async function (req, res) {
     res.set("Content-Type", "application/json");
     return res.status(200).send({
         status: true,
-        github: "https://github.com/PawanOsman/ChatGPT",
-        discord: "https://discord.pawan.krd"
+        name: "Lc-cn Reverse Proxy",
+        version: "1.0.0",
     });
 });
 app.post("/v1/completions", completions);
