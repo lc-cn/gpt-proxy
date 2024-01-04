@@ -23,7 +23,7 @@ const router = new Router();
 router.post('/v1/completions',callApi((openAi,req)=>{
     return openAi.completions.create(req.body)
 }))
-router.post('/vi/chat/completions',callApi((openAi,req)=>{
+router.post('/v1/chat/completions',callApi((openAi,req)=>{
     return openAi.chat.completions.create(req.body)
 }))
 router.post('/v1/audio/speech',callApi((openAi,req)=>{
