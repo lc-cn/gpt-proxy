@@ -1,5 +1,4 @@
-import { OPENAI_KEYS } from "./config.js";
-
+const {OPENAI_KEYS}=require('./config.js')
 async function* chunksToLines(chunksAsync) {
     let previous = "";
     for await (const chunk of chunksAsync) {
@@ -42,4 +41,4 @@ function getOpenAIKey() {
     return OPENAI_KEYS[Math.floor(Math.random() * OPENAI_KEYS.length)];
 }
 
-export { generateId, getOpenAIKey, streamCompletion }
+module.exports= { generateId, getOpenAIKey, streamCompletion }

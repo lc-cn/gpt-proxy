@@ -1,6 +1,5 @@
-import { getOpenAIKey } from "./functions.js"
-import {OpenAI} from "openai";
-
+const { getOpenAIKey } = require('./functions.js')
+const { OpenAI } = require('openai');
 async function completions(ctx) {
     const authorization=ctx.req.headers?.authorization||ctx.req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
     const apiKey=authorization.split(" ")[1];
@@ -8,7 +7,7 @@ async function completions(ctx) {
         apiKey,
     })
     try{
-        ctx.body=await openAi.completions.create(ctx.req.body)
+        ctx.body=await openAi.completions.create(ctx.request.body)
     }catch (e){
         ctx.body=e
     }
@@ -25,4 +24,4 @@ async function chatCompletions(ctx, res) {
     }
 }
 
-export { completions, chatCompletions };
+module.exports={ completions, chatCompletions };

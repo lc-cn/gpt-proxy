@@ -1,11 +1,11 @@
-import {SERVER_PORT} from "./config.js";
+const  {SERVER_PORT} = require('./config.js');
 
 const Koa = require('koa');
 const KoaBodyParser = require("koa-bodyparser");
 const Router = require("@koa/router");
 const dotenv=require('dotenv')
 dotenv.config()
-import { completions, chatCompletions } from './routes.js';
+const { completions, chatCompletions } =require('./routes.js');
 process.on("uncaughtException", function (err) {
     if (DEBUG) console.error(`Caught exception: ${err}`);
 });
