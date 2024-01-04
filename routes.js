@@ -7,6 +7,7 @@ async function completions(ctx) {
         apiKey,
     })
     try{
+        console.log(ctx.body)
         ctx.body=await openAi.completions.create(ctx.request.body)
     }catch (e){
         ctx.body=e
@@ -18,6 +19,7 @@ async function chatCompletions(ctx, res) {
     const apiKey=authorization.split(" ")[1];
     const openAi=new OpenAI({apiKey})
     try{
+        console.log(ctx.body)
         ctx.body=await openAi.chat.completions.create(ctx.request.body)
     }catch (e){
         ctx.body=e

@@ -17,7 +17,7 @@ koa.use(KoaBodyParser()).use(router.routes()).use(router.allowedMethods());
 router.get('home',"/", async function (ctx) {
     ctx.body ={
         status: true,
-        name: "Lc-cn Reverse Proxy",
+        name: "yea Reverse Proxy",
         version: "1.0.0",
     }
 });
