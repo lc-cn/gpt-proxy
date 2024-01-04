@@ -18,7 +18,7 @@ async function chatCompletions(req, res) {
     const authorization=req.headers?.authorization||req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
     const apiKey=authorization.split(" ")[1];
     const openAi=new OpenAI({apiKey})
-    console.log(req.body);
+    console.log(req);
     try{
         res.status(200).send(await openAi.chat.completions.create(req.body));
     }catch (e){
