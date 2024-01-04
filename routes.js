@@ -5,8 +5,8 @@ import { DEBUG, MODERATION } from "./config.js";
 
 async function completions(req, res) {
     let orgId = generateId();
-    let key = getOpenAIKey();
-
+    const authorization=req.headers?.authorization||req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
+    const key = authorization.split(" ")[1];
     if (!req.body.prompt) {
         res.set("Content-Type", "application/json");
         return res.status(400).send({
@@ -48,7 +48,7 @@ async function completions(req, res) {
                     headers: {
                         Accept: "text/event-stream",
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${key}`,
+                        Authorization: authorization,
                     },
                 },
             );
@@ -106,7 +106,7 @@ async function completions(req, res) {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${key}`,
+                        Authorization: authorization,
                     },
                 },
             );
@@ -133,7 +133,8 @@ async function completions(req, res) {
 
 async function chatCompletions(req, res) {
     let orgId = generateId();
-    let key = getOpenAIKey();
+    const authorization=req.headers?.authorization||req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
+    const key = authorization.split(" ")[1];
 
     if (MODERATION) {
         try {
@@ -188,7 +189,7 @@ async function chatCompletions(req, res) {
                     headers: {
                         Accept: "text/event-stream",
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${key}`,
+                        Authorization:authorization,
                     },
                 },
             );
@@ -249,7 +250,7 @@ async function chatCompletions(req, res) {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${key}`,
+                        Authorization: authorization,
                     },
                 },
             );
