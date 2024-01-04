@@ -14,7 +14,9 @@ function callApi(callback){
         const openAi=new OpenAI({apiKey})
         try{
             ctx.body=await callback(openAi,ctx.req)
+            console.log('callback returned',ctx.body)
         }catch (e){
+            console.error(e)
             ctx.body=e
         }
     }
@@ -41,7 +43,7 @@ router.post('/v1/embeddings',callApi((openAi,req,)=>{
 router.post('v1/files',callApi((openAi,req)=>{
     return openAi.files.create(req.body)
 }))
-router.get('v1/files',callApi((openAi,req)=>{
+router.get('v1/files',callApi((openAi)=>{
     return openAi.files.list()
 }))
 router.post('/v1/images/generations',callApi((openAi,req)=>{
