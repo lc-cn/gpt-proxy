@@ -1,4 +1,6 @@
 import express, { json, urlencoded } from 'express';
+import dotenv from 'dotenv';
+dotenv.config()
 import { completions, chatCompletions } from './routes.js';
 import { corsMiddleware, rateLimitMiddleware } from './middlewares.js';
 import { DEBUG, SERVER_PORT } from './config.js';
