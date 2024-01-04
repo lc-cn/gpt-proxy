@@ -1,42 +1,16 @@
 import axios from "axios";
-import { Configuration, OpenAIApi } from "openai";
 import { streamCompletion, generateId, getOpenAIKey } from "./functions.js"
-import { DEBUG, MODERATION } from "./config.js";
+import { DEBUG } from "./config.js";
 
 async function completions(req, res) {
     let orgId = generateId();
     const authorization=req.headers?.authorization||req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
-    const key = authorization.split(" ")[1];
     if (!req.body.prompt) {
         res.set("Content-Type", "application/json");
         return res.status(400).send({
             status: false,
             error: "No prompt provided"
         });
-    }
-
-    if (DEBUG) console.log(`[Text] [${req.user.data.id}] [${req.user.data.name}] [MAX-TOKENS:${req.body.max_tokens ?? "unset"}] ${req.body.prompt}`);
-
-    if (MODERATION) {
-        try {
-            let openAi = new OpenAIApi(new Configuration({ apiKey: key }));
-            let response = await openAi.createModeration({
-                input: req.body.prompt,
-            });
-
-            if (response.data.results[0].flagged) {
-                res.set("Content-Type", "application/json");
-                return res.status(400).send({
-                    status: false,
-                    error: "Your prompt contains content that is not allowed",
-                    reason: response.data.results[0].reason,
-                    contact: "https://discord.pawan.krd"
-                });
-            }
-        }
-        catch (e) {
-
-        }
     }
 
     if (req.body.stream) {
@@ -134,52 +108,6 @@ async function completions(req, res) {
 async function chatCompletions(req, res) {
     let orgId = generateId();
     const authorization=req.headers?.authorization||req.headers?.Authorization|| `Bearer ${getOpenAIKey()}`;
-    const key = authorization.split(" ")[1];
-
-    if (MODERATION) {
-        try {
-            let prompt = [];
-            try {
-                req.body.messages.forEach(element => {
-                    prompt.push(element.content);
-                });
-            }
-            catch (e) {
-                return res.status(400).send({
-                    status: false,
-                    error: "messages is required! and must be an array of objects with content and author properties"
-                });
-            }
-
-            if (DEBUG) console.log(`[CHAT] [${req.user.data.id}] [${req.user.data.name}] [MAX-TOKENS:${req.body.max_tokens ?? "unset"}] ${prompt}`);
-
-            let openAi = new OpenAIApi(new Configuration({ apiKey: key }));
-            let response = await openAi.createModeration({
-                input: prompt,
-            });
-
-            if (response.data.results[0].flagged) {
-                res.set("Content-Type", "application/json");
-                return res.status(400).send({
-                    status: false,
-                    error: "Your prompt contains content that is not allowed",
-                    reason: response.data.results[0].reason,
-                    support: "https://discord.pawan.krd"
-                });
-            }
-        }
-        catch (e) {
-            if (DEBUG) console.log(e);
-            return res.status(500).send({
-                status: false,
-                error: "something went wrong!"
-            });
-        }
-    }
-    else {
-        if (DEBUG) console.log(`[CHAT] [${req.user.data.id}] [${req.user.data.name}] [MAX-TOKENS:${req.body.max_tokens ?? "unset"}]`);
-    }
-
     if (req.body.stream) {
         try {
             const response = await axios.post(

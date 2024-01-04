@@ -2,9 +2,6 @@
 export const SERVER_PORT = 3000; // Server port
 export const DEBUG = false; // Debug mode
 
-// Prompt Moderation before sending to OpenAI
-export const MODERATION = true; // Moderation mode
-
 // Rate limit
 export const PRIOD = 15 * 1000; // 15 seconds
 export const RATE_LIMIT = 50; // 50 requests per 15 seconds
