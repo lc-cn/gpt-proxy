@@ -8,3 +8,4 @@ dist/
 .parcel-cache
 db.json
 .env
+/package-lock.json
