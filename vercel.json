@@ -8,11 +8,7 @@
     ],
     "routes": [
         {
-            "src": "/v1/completions",
-            "dest": "/"
-        },
-        {
-            "src": "/v1/chat/completions",
+            "src": "/v1/(.*)",
             "dest": "/"
         }
     ]
