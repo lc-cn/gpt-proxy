@@ -14,7 +14,7 @@ function callApi(callback){
         const openAi=new OpenAI({apiKey})
         try{
             console.log('request body',ctx.request.body)
-            ctx.body=await callback(openAi,ctx.req)
+            ctx.body=await callback(openAi,ctx.request)
             console.log('callback returned',ctx.body)
         }catch (e){
             console.error(e)
