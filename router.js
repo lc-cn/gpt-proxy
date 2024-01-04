@@ -13,6 +13,7 @@ function callApi(callback){
         const apiKey=authorization.split(" ")[1];
         const openAi=new OpenAI({apiKey})
         try{
+            console.log('request body',req.body)
             ctx.body=await callback(openAi,ctx.req)
             console.log('callback returned',ctx.body)
         }catch (e){
